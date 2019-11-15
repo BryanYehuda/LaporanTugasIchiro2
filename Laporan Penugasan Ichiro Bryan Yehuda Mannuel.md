@@ -8,6 +8,7 @@ Divisi : Programming
 2. Tutorial _ROS Melodic Morenia_ sudah terselesaikan
 
 ## Tugas 1 : Install Webots
+
  
  1. Buka Terminal pada _Linux Ubuntu_ agar bisa memasukkan command-command _Linux Ubuntu_ yang diperlukan        
 (**Selesai pada 12 November 2019, jam 19.30**)       
@@ -29,7 +30,7 @@ curl -s -L https://www.cyberbotics.com/Cyberbotics.asc | sudo apt-key add -
 apt-add-repository 'deb https://www.cyberbotics.com/debian/ binary-amd64/'
 apt-get update
 ```
-(**Selesai pada 12 November 2019, jam 19.36**)    
+(**Selesai pada 12 November 2019, jam 19.36**)        
 
  5. Buka aplikasi _Software and Updates_, buka tab `other software`, dan klik `add..` lalu tambahkan : 
 ```
