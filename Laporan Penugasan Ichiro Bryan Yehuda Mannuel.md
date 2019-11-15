@@ -5,8 +5,8 @@ Divisi : Programming
 
 ## Persiapan Sebelum Penugasan
 
-1. _OS Linux Ubuntu_ sudah terinstall 
-2. Tutorial _ROS Melodic Morenia_ sudah terselesaikan
+1._OS Linux Ubuntu_ sudah terinstall                           
+2.Tutorial _ROS Melodic Morenia_ sudah terselesaikan
 
  ## Tugas 1 : Install Webots     
  
@@ -18,7 +18,7 @@ sudo su
 ```
 dan masukkan password               
 (**Selesai pada 12 November 2019, jam 19.31**)   
-3. Webots harus diautentikasi dengan Signature [Cyberbotics.asc](https://www.cyberbotics.com/Cyberbotics.asc) menggunakan command:
+ 3. Webots harus diautentikasi dengan Signature [Cyberbotics.asc](https://www.cyberbotics.com/Cyberbotics.asc) menggunakan command:
 ```
 curl -s -L https://www.cyberbotics.com/Cyberbotics.asc | sudo apt-key add -
 ```
