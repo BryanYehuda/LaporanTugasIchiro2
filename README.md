@@ -1,2 +1,2 @@
-# LaporanTugasIchiro2
-Laporan penugasan Ichiro kedua
+# Laporan Tugas Ichiro 2
+Laporan dari penugasan Ichiro kedua
