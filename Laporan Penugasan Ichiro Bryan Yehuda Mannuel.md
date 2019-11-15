@@ -51,3 +51,11 @@ dan tunggu hingga proses instalasi selesai
 
 
 ## Tugas 2: Selesaikan Tutorial Webots
+
+### 1. Simulasi Pertama di _Webots_
+
+1. Buka dan Jalankan _Webots_ dengan mengklik Ikon _Webots_  
+(**Selesai pada 12 November 2019, jam 21.00**)  
+2. Pilih Theme yang diinginkan  
+(**Selesai pada 12 November 2019, jam 21.01**)  
+3. 
