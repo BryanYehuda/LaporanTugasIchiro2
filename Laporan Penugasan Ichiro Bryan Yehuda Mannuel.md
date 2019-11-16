@@ -6,7 +6,7 @@ Divisi : Programming
 ## Persiapan Sebelum Penugasan
 
  1. _OS Linux Ubuntu_ sudah terinstall                           
- 2. Tutorial _ROS Melodic Morenia_ sudah terselesaikan
+ 2. Tutorial _ROS Melodic Morenia_ sudah terselesaikan. Laporan bisa dilihat di [Laporan Penugasan Pertama](https://github.com/BryanYehuda/LaporanTugasIchiro1/blob/master/Laporan%20Penugasan%20Ichiro%20Bryan%20Yehuda%20Mannuel.md)
  3. Sudah mempelajari dan familier dengan Syntax _Markdown_
 
  ## Tugas 1 : Install Webots     
@@ -666,8 +666,8 @@ Sehingga yang awalnya _Nodes_ ini tidak mempunyai Fields, sekarang memounyai 3 F
 ### 8. Menyambungkan dengan ROS
 1. Install ROS 
 (**Selesai pada 8 November 2019, jam 09.30**)    
-2. Jalankan Tutorial ROS
-(**Selesai pada 12 November 2019, jam 21.03**)
+2. Jalankan Tutorial ROS. Laporan bisa dilihat di [Laporan Penugasan Pertama](https://github.com/BryanYehuda/LaporanTugasIchiro1/blob/master/Laporan%20Penugasan%20Ichiro%20Bryan%20Yehuda%20Mannuel.md)
+(**Selesai pada 12 November 2019, jam 20.35**)
 3. Install _webots_ros_ Package dengan command :
 ```
 sudo apt-get install ros-melodic-webots-ros
