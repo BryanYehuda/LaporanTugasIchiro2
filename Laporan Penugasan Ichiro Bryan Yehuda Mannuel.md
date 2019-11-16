@@ -596,13 +596,89 @@ Digunakan untuk menjalankan Robot berdasarkan kecepatan yang kita inginkan
 ```
 Digunakan untuk mendapatkan bacaan dari Sensor dan kemudian mengirimkan datanya ke motor untuk diolah lebih lanjut sehingga Robot tidak menabrak Obstacle
 
-22. Dari Dari bagian kelima ini, kita mempelajari :
+22. Dari Dari bagian keenam ini, kita mempelajari :
     * Cara membuat Robot sederhana dan caranya mengimplementasikan controller
 
 ### 7. PROTO
 
 1. Buka `4_wheels_robot.wbt` di dalam text editor dan kemudian Save As dengan cara `File / Save World As...`sebagai `FourWheelsRobot.proto` di dalam direktori `protos` dan buka juga di dalam text editor   
-(**Selesai pada 12 November 2019, jam 22.50**)
+(**Selesai pada 13 November 2019, jam 09.03**)
+2. Setiap File `Proto` harus mempunyai structure seperti berikut :
+```
+PROTO protoName [
+  protoFields
+]
+{
+  protoBody
+}
+```
+3. `protoName` harus berisikan nama dari File PROTO, sedangkan `protoFields` mendefinisikan Fields yang bisa dimodifikasi dari _Nodes_ PROTO
+4. Copy-Paster struktur awal PROTO File ini dan simpan :
+```
+ PROTO FourWheelsRobot [
 
+  ]
+  {
+    Robot {
+      ...
+    }
+  }
+```
+(**Selesai pada 13 November 2019, jam 09.08**)
 
+5. Buka `4_wheels_robot.wbt` di dalam _Webots_ dan tambahkan _Nodes_ `FourWheelsRobot`yang ada di lokasi 
+`PROTO nodes (Current Project) / FourWheelsRobot (Robot)`
+(**Selesai pada 13 November 2019, jam 09.10**)
+6.  Edit PROTO File  dan tambahkan line berikut :
+```
+PROTO FourWheelsRobot [
+  field SFVec3f    translation  0 0 0
+  field SFRotation rotation     0 1 0 0
+  field SFFloat    bodyMass     1
+]
+{
+  Robot {
+    translation IS translation
+    rotation IS rotation
+    children [
+      ...
+    ]
+    boundingObject USE BODY
+    physics Physics {
+      density -1
+      mass IS bodyMass
+    }
+    controller "4_wheels_collision_avoidance"
+  }
+}
+
+```
+Sehingga yang awalnya _Nodes_ ini tidak mempunyai Fields, sekarang memounyai 3 Fields
+(**Selesai pada 13 November 2019, jam 09.20**)
+
+7. Save Simulasi
+(**Selesai pada 13 November 2019, jam 09.21**)
+8.  Dari Dari bagian ketujuh ini, kita mempelajari :
+    * Cara membuat _Nodes_ PROTO dari _Nodes_ apapun yang ada di _Webots
+    * Cara mengcopy definisi dari _Nodes_ yang ada di PROTO File
+    * cara membuka dan menyambungkan PROTO Fields ke dalam _Nodes_ internal
+ 
+### 8. Menyambungkan dengan ROS
+1. Install ROS 
+(**Selesai pada 8 November 2019, jam 09.30**)    
+2. Jalankan Tutorial ROS
+(**Selesai pada 12 November 2019, jam 21.03**)
+3. Install _webots_ros_ Package dengan command :
+```
+sudo apt-get install ros-melodic-webots-ros
+```
+Pada terminal Linux
+(**Selesai pada 15 November 2019, jam 20.50**)
+
+## Tugas 3 : Membuat Laporan Dalam Bentuk Markdown
+    
+1. Melakukan pengetikan laporan dalam bentuk _Markdown_ pada Text Editor StackEdit bersumber dari catatan di _Notes_          
+2. Melakukan Update setiap kali ada aktivitas penugasan yang dikerjakan
+
+## Tugas Bonus : Mengontrol Robot di Webots dengan ROS Melodic
 
