@@ -477,3 +477,132 @@ Berarti kita menggunakan informasi dari bagian sebelumnya untuk menjalankan kedu
 (**Selesai pada 12 November 2019, jam 22.50**)
 2. Hapus _Node_ E-Puck, Bola, dan Dumbbell
 (**Selesai pada 12 November 2019, jam 22.51**)
+3. Set yang mengandung _Node_ Solid dan semua _Node_ turunannya disebut _Solid Nodes_. Definisi yang sama juga berlaku bagi Device, Robot, Joint, dan Motor. Sedangkan Sensor dan Actuator merupakan kombinasi dari Solid dan Device
+4. Stuktur utama dari sebuah Robot adalah sebuah pohon dari _Node_ Solid yang dihubungkan secara bersama-sama. Root dari pohon ini haruslah _Node_ Robot. Solid-solid dari pohon ini digabungkan oleh _Joint Nodes_. Sebuah Device haruslah anak dari _Node_ Robot, Solid, atau Joint.
+5. _Jooint Node_ digunakan untuk menambahkan 1 atau 2 derajat kebebasan (DOF / Degree of Freedom) antara Orangtua dan Anaknya. Orangtua dan Anak secara langsung yang dihubungkan oleh _Joint Nodes_ kedua-duanya adalah _Nodes_ Solid. Joint adalah semacam sendi pada manusia
+6. _Joint Node_ bisa dimonitor atau digerakkan dengan menambahkan sebua Node `PositionSensor` atau _Node_ Motor pada Field `device`
+7. Buat Robot yang terdiri dari 4 _Nodes_ Sphere dan 1 _Nodes_ Box, dimana kelima _Nodes_ ini disambungkan oleh _Joint Nodes_ agar memiliki DOF
+(**Selesai pada 12 November 2019, jam 23.10**)
+8. Kita set _Nodes_ Solid milik Body atau Box menjadi _Robot Nodes_ atau root dari Robot kita
+(**Selesai pada 12 November 2019, jam 23.12**)
+9. Set Color dari Shape Box ini menjadi Merah
+(**Selesai pada 12 November 2019, jam 23.14**)
+10. Set Field `boundingObject` menjadi `(0.1, 0.05, 0.2)` dan beri _Nodes_ Physic ke Robot tersebut
+(**Selesai pada 12 November 2019, jam 23.20**)
+11. Tamabahkan _Nodes_ `HingeJointParameter` ke roda pertama dan ubah value Anchornya menjadi `0.06, 0, 0.05`, value Axisnya menjadi `(1, 0, 0)` dan ubah Solid Translationnya menjadi `0.06, 0, 0.05`
+(**Selesai pada 12 November 2019, jam 23.24**)
+12. Tambahkan _Nodes_ ini pada roda-roda lainnya dan jangan lupa menambahkan _Nodes_ Physic ke Roda-roda tersebut
+(**Selesai pada 12 November 2019, jam 23.40**)
+13. Untuk tiap `HingeJoint` kita perlu menambahkan _Node_ :
+    * `jointParameter` dan ubah nilai Anchornya menjadi `0.06 0 -0.05)` dan nilai Axisnya menjadi `(1 0 0)`
+    * `device` tambahkan `RotationalMotor` agar kita bisa menjalankan roda dan ubah Field `name` mereka menjadi `wheel1` sampai `wheel4`
+    * `endPoint` Tambahkan _Nodes_ Solid kemudian _Shape Node_ di dalam Field `children` dan kemudian tambahkan Cylinder di dalam Field `geometry`. Cylinder ini harus mempunyai `radius` sebesar `0.04`dan `height` `0.02`. Ubah warnanya menjadi hijau.
+(**Selesai pada 13 November 2019, jam 00.30**)
+14. Tambahkan 2 sensor jarak pada robot ini dengan cara menambahkan 2 _Nodes_ `DistanceSensor`sebagai anak dari _Robot Nodes_
+(**Selesai pada 13 November 2019, jam 00.32**)
+15. Ubah bentuk mereka menjadi kotak dan mempunyai `edge` sebesar `0.01m`. Ubah warna mereka menjadi biru dan ubah nama mereka menurut grafik
+(**Selesai pada 13 November 2019, jam 00.35**)
+16. Buat C++ Controller baru dengan nama ``4WheelsCollisionAvoidance`` dengan Buka Tab `Wizard` dan klik `New Robot Controller...`, lalu ikuti petunjuk Wizard       
+(**Selesai pada 13 November 2019, jam 00.37**)    
+17. Copy Code berikut ini pada file tersebut dengan cara Copy-Paste ke Editor _Webots_ yang ada di sebelah kanan :
+```cpp
+#include <webots/DistanceSensor.hpp>
+#include <webots/Motor.hpp>
+#include <webots/Robot.hpp>
+
+#define TIME_STEP 64
+using namespace webots;
+
+int main(int argc, char **argv) {
+  Robot *robot = new Robot();
+  DistanceSensor *ds[2];
+  char dsNames[2][10] = {"ds_right", "ds_left"};
+  for (int i = 0; i < 2; i++) {
+    ds[i] = robot->getDistanceSensor(dsNames[i]);
+    ds[i]->enable(TIME_STEP);
+  }
+  Motor *wheels[4];
+  char wheels_names[4][8] = {"wheel1", "wheel2", "wheel3", "wheel4"};
+  for (int i = 0; i < 4; i++) {
+    wheels[i] = robot->getMotor(wheels_names[i]);
+    wheels[i]->setPosition(INFINITY);
+    wheels[i]->setVelocity(0.0);
+  }
+  int avoidObstacleCounter = 0;
+  while (robot->step(TIME_STEP) != -1) {
+    double leftSpeed = 1.0;
+    double rightSpeed = 1.0;
+    if (avoidObstacleCounter > 0) {
+      avoidObstacleCounter--;
+      leftSpeed = 1.0;
+      rightSpeed = -1.0;
+    } else { // read sensors
+      for (int i = 0; i < 2; i++) {
+        if (ds[i]->getValue() < 950.0)
+          avoidObstacleCounter = 100;
+      }
+    }
+    wheels[0]->setVelocity(leftSpeed);
+    wheels[1]->setVelocity(rightSpeed);
+    wheels[2]->setVelocity(leftSpeed);
+    wheels[3]->setVelocity(rightSpeed);
+  }
+  delete robot;
+  return 0;  // EXIT_SUCCESS
+}
+```
+(**Selesai pada 13 November 2019, jam 00.40**)
+
+18. Dimana bagian :
+   ```cpp
+#include <webots/Motor.hpp>
+```
+Berguna untuk memasukkan API yang dibutuhkan oleh _Nodes_ `RotationalMotor`
+
+19. Bagian :
+ ```cpp
+// initialize motors
+Motor *wheels[4];
+char wheelsNames[4][8] = {"wheel1", "wheel2", "wheel3", "wheel4"};
+for (int i = 0; i < 4 ; i++)
+  wheels[i] = robot->getMotor(wheelsNames[i]);
+```
+Berguna untuk menginisialisasi dan mendapatkan referensi dari _Nodes_ `RotationalMotor`
+
+20. Bagian :
+```cpp
+double speed = -1.5; // [rad/s]
+wheels[0]->setPosition(INFINITY);
+wheels[0]->setVelocity(speed);
+```
+Digunakan untuk menjalankan Robot berdasarkan kecepatan yang kita inginkan
+
+21. Bagian :
+```cpp
+ int avoidObstacleCounter = 0;
+  while (robot->step(TIME_STEP) != -1) {
+    double leftSpeed = 1.0;
+    double rightSpeed = 1.0;
+    if (avoidObstacleCounter > 0) {
+      avoidObstacleCounter--;
+      leftSpeed = 1.0;
+      rightSpeed = -1.0;
+    } else { // read sensors
+      for (int i = 0; i < 2; i++) {
+        if (ds[i]->getValue() < 950.0)
+          avoidObstacleCounter = 100;
+      }
+    }
+```
+Digunakan untuk mendapatkan bacaan dari Sensor dan kemudian mengirimkan datanya ke motor untuk diolah lebih lanjut sehingga Robot tidak menabrak Obstacle
+
+22. Dari Dari bagian kelima ini, kita mempelajari :
+    * Cara membuat Robot sederhana dan caranya mengimplementasikan controller
+
+### 7. PROTO
+
+1. Buka `4_wheels_robot.wbt` di dalam text editor dan kemudian Save As dengan cara `File / Save World As...`sebagai `FourWheelsRobot.proto` di dalam direktori `protos` dan buka juga di dalam text editor   
+(**Selesai pada 12 November 2019, jam 22.50**)
+
+
+
