@@ -7,6 +7,7 @@ Divisi : Programming
 
  1. _OS Linux Ubuntu_ sudah terinstall                           
  2. Tutorial _ROS Melodic Morenia_ sudah terselesaikan
+ 3. Sudah mempelajari dan familier dengan Syntax _Markdown_
 
  ## Tugas 1 : Install Webots     
  
@@ -251,3 +252,28 @@ Sebuah _Floor_ baru akan muncul di tengah-tengah scene
      * Bisa menggunakan mekanisme _DEF-USE_
 
 ### 3. Modifikasi Penampilan
+
+1. Buka `obstacles.wbt`dan kemudian Reset Simulasi dan kemudian Save As dengan cara `File / Save World As...`sebagai `appearances.wbt`       
+(**Selesai pada 12 November 2019, jam 22.14**)
+2. Lighting dari sebuah _World_ ditentukan oleh _node_ `Lights` dan ada beberapa tipe seperti :
+    * `DirectionalLight` Mensimulasikan cahaya dari sumber yang sangat jauh seperti matahari
+    * `PointLight` Mensimulasikan cahaya dari satu sumber, seperti bohlam lampu
+    * `SpotLight` Mensimulasikan cahaya dari sumber berbentuk corong seperti senter
+3. _Node_ ` Appearance` dan `PBRAppearance` dari _Node Shape_ menentukan penampilan graphical dari sebuah objek dan bertanggung jawab atas warna dan tekstur dari objek tersebut
+4. Di dalam _Node Shape_ tambahkan _Node_ `PBRAppearance` ke dalam Field `Appearance`, hal ini karena _Node_ `PBRAppearance`akan lebih bagus apabila dirender. Lakukan Modify terhadap Fields :
+     * Ubah `baseColor` menjadi biru
+     * Ubah `metalness` menjadi `0`
+     * Ubah `roughness` menjadi `0.5`
+  (**Selesai pada 12 November 2019, jam 22.16**)
+ 5. Tambahkan _Node_ `PBRAppearance` ke dalam Field `Appearance`ke dalam bola dan modify beberapa Fields :
+     * Ubah `metalness` menjadi `0`
+     * Ubah `roughness` menjadi `0.5`
+     * Tambahkan _Node_ `ImageTexture` kedalam Field `baseColorMap`
+     * Tambahkan item ke  _Node_ `ImageTexture` dengan mengklik Button Plus
+     * Masukkan Url : `usr/local/webots/projects/default/worlds/textures/red_brick_wall.jpg`
+  (**Selesai pada 12 November 2019, jam 22.20**)
+6. _Webots_ memberikan beberapa opsi terkait dengan rendering yang ada di dalam menu `view`
+7. Lihat Simulasi di dalam Wireframe Mode menggunakan `View / Wireframe Rendering`dan kembalikan ke Mode Awal dengan `iew / Plain Rendering`
+(**Selesai pada 12 November 2019, jam 22.22**)
+8. Dari Tutorial Part ketiga ini, kita belajar :
+     * Cara membuat simulasi kita menjadi lebih cantik melalui _Node_ `PBRAppearance` dan _Node_ `lights`
