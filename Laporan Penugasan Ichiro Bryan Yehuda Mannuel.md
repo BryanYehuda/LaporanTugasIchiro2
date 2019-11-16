@@ -273,7 +273,181 @@ Sebuah _Floor_ baru akan muncul di tengah-tengah scene
      * Masukkan Url : `usr/local/webots/projects/default/worlds/textures/red_brick_wall.jpg`
   (**Selesai pada 12 November 2019, jam 22.20**)
 6. _Webots_ memberikan beberapa opsi terkait dengan rendering yang ada di dalam menu `view`
-7. Lihat Simulasi di dalam Wireframe Mode menggunakan `View / Wireframe Rendering`dan kembalikan ke Mode Awal dengan `iew / Plain Rendering`
+7. Lihat Simulasi di dalam Wireframe Mode menggunakan `View / Wireframe Rendering`dan kembalikan ke Mode Awal dengan `View / Plain Rendering`
 (**Selesai pada 12 November 2019, jam 22.22**)
 8. Dari Tutorial Part ketiga ini, kita belajar :
      * Cara membuat simulasi kita menjadi lebih cantik melalui _Node_ `PBRAppearance` dan _Node_ `lights`
+
+### 4. Lebih Dalam Tentang Controller
+1. Buka `appearances.wbt`dan kemudian Reset Simulasi dan kemudian Save As dengan cara `File / Save World As...`sebagai `collision_avoidance.wbt`   
+(**Selesai pada 12 November 2019, jam 22.24**)
+2. Buat C++ Controller baru dengan nama `EPuckAvoidCollision` dengan Buka Tab `Wizard` dan klik `New Robot Controller...`, lalu ikuti petunjuk Wizard       
+(**Selesai pada 12 November 2019, jam 22.26**)  
+3. Untuk membuat Controller bagi Robot _E-puck_ ini, kita perlu memahami informasi tambahan mengenai robot ini. Agar bisa membuat algoritma Collision Avoidance, kita pelru membaca nilai dari ke-8 infra-red Sensors yang ada di sekitar badan Robot ini. Lalu berdasarkan nilai itu, kita gerakkan kedua rodanya
+4. Nilai dari Sensor ini dinyatakan dalam angka 4096 sampai 0, dimana angka 4096 berarti jaraknya sangat dekat dan angka 0 berarti jaraknya jauh
+5. Kita sekarang akan memprogram Robot _E-puck ini untuk maju terus sampai Sensor depan mendeteksi adanya Obstacle di depan dengan code :
+```cpp
+#include <webots/Robot.hpp>
+#include <webots/DistanceSensor.hpp>
+#include <webots/Motor.hpp>
+
+// time in [ms] of a simulation step
+#define TIME_STEP 64
+
+#define MAX_SPEED 6.28
+
+// All the webots classes are defined in the "webots" namespace
+using namespace webots;
+
+// entry point of the controller
+int main(int argc, char **argv) {
+  // create the Robot instance.
+  Robot *robot = new Robot();
+
+  // initialize devices
+  DistanceSensor *ps[8];
+  char psNames[8][4] = {
+    "ps0", "ps1", "ps2", "ps3",
+    "ps4", "ps5", "ps6", "ps7"
+  };
+
+  for (int i = 0; i < 8; i++) {
+    ps[i] = robot->getDistanceSensor(psNames[i]);
+    ps[i]->enable(TIME_STEP);
+  }
+
+  Motor *leftMotor = robot->getMotor("left wheel motor");
+  Motor *rightMotor = robot->getMotor("right wheel motor");
+  leftMotor->setPosition(INFINITY);
+  rightMotor->setPosition(INFINITY);
+  leftMotor->setVelocity(0.0);
+  rightMotor->setVelocity(0.0);
+
+  // feedback loop: step simulation until an exit event is received
+  while (robot->step(TIME_STEP) != -1) {
+    // read sensors outputs
+    double psValues[8];
+    for (int i = 0; i < 8 ; i++)
+      psValues[i] = ps[i]->getValue();
+
+    // detect obstacles
+    bool right_obstacle =
+      psValues[0] > 70.0 ||
+      psValues[1] > 70.0 ||
+      psValues[2] > 70.0;
+    bool left_obstacle =
+      psValues[5] > 70.0 ||
+      psValues[6] > 70.0 ||
+      psValues[7] > 70.0;
+
+    // initialize motor speeds at 50% of MAX_SPEED.
+    double leftSpeed  = 0.5 * MAX_SPEED;
+    double rightSpeed = 0.5 * MAX_SPEED;
+    // modify speeds according to obstacles
+    if (left_obstacle) {
+      // turn right
+      leftSpeed  += 0.5 * MAX_SPEED;
+      rightSpeed -= 0.5 * MAX_SPEED;
+    }
+    else if (right_obstacle) {
+      // turn left
+      leftSpeed  -= 0.5 * MAX_SPEED;
+      rightSpeed += 0.5 * MAX_SPEED;
+    }
+    // write actuators inputs
+    leftMotor->setVelocity(leftSpeed);
+    rightMotor->setVelocity(rightSpeed);
+  }
+
+  delete robot;
+  return 0; //EXIT_SUCCESS
+}
+```
+(**Selesai pada 12 November 2019, jam 22.30**)
+
+6.  Bagian :
+ ```cpp
+// initialize devices
+DistanceSensor *ps[8];
+char psNames[8][4] = {
+  "ps0", "ps1", "ps2", "ps3",
+  "ps4", "ps5", "ps6", "ps7"
+};
+
+for (int i = 0; i < 8; i++) {
+  ps[i] = robot->getDistanceSensor(psNames[i]);
+  ps[i]->enable(TIME_STEP);
+}
+```
+Berarti kita harus menginisialisasi, mendapatkan, dan menjalankan Sensor Jarak terlebih dahulu
+
+7. Bagian :
+ ```cpp
+Motor *leftMotor = robot->getMotor("left wheel motor");
+Motor *rightMotor = robot->getMotor("right wheel motor");
+leftMotor->setPosition(INFINITY);
+rightMotor->setPosition(INFINITY);
+leftMotor->setVelocity(0.0);
+rightMotor->setVelocity(0.0);
+```
+Berarti kita harus menginisialisasi, mendapatkan, dan menjalankan kedua motor dari robot
+
+8. Bagian :
+```cpp
+// read sensors outputs
+double psValues[8];
+for (int i = 0; i < 8 ; i++)
+  psValues[i] = ps[i]->getValue()
+ ```
+ Berarti kita harus membaca Output dari Sensor Jarak
+
+9. Bagian:
+ ```cpp
+// detect obstacles
+bool right_obstacle =
+  psValues[0] > 70.0 ||
+  psValues[1] > 70.0 ||
+  psValues[2] > 70.0;
+bool left_obstacle =
+  psValues[5] > 70.0 ||
+  psValues[6] > 70.0 ||
+  psValues[7] > 70.0;
+```
+Berarti kita mendeteksi apakah ada sesuatu objek atau halangan yang ada di depan kita
+
+10. Bagian :
+```cpp
+#define MAX_SPEED 6.28
+...
+// initialize motor speeds at 50% of MAX_SPEED.
+double leftSpeed  = 0.5 * MAX_SPEED;
+double rightSpeed = 0.5 * MAX_SPEED;
+// modify speeds according to obstacles
+if (left_obstacle) {
+  // turn right
+  leftSpeed  += 0.5 * MAX_SPEED;
+  rightSpeed -= 0.5 * MAX_SPEED;
+}
+else if (right_obstacle) {
+  // turn left
+  leftSpeed  -= 0.5 * MAX_SPEED;
+  rightSpeed += 0.5 * MAX_SPEED;
+}
+// write actuators inputs
+leftMotor->setVelocity(leftSpeed);
+rightMotor->setVelocity(rightSpeed);
+```
+Berarti kita menggunakan informasi dari bagian sebelumnya untuk menjalankan kedua roda dari Robot tersebut
+
+11. Dari bagian keempat ini, kita mempelajari :
+   * Controller Entry Point adalah `main function` sama sepoerti Code dalam bahasa C++ pada umumnya
+   * Tidak boleh ada Function `Webots API` yang diapnngil sebelum Function `wp_robots_init`
+   * Function terakhir yang dipanggil sebelum `main function` berakhir adalah Function `wp_robot_cleanup
+   * Sebuah Device direferensikan oleh Field `name` dari _node_ device tersebut. dan bisa diambil menggunakan Function `wp_robot_get_device`
+   * Setiap controller dijalankan sebagai proses anak dari _Webots_, sehingga proses ini tidak berbagi memori dengan _Webots_ dan bisa dijalankan oleh CPU yang berbeda-beda
+   * Code Controller dihubungkan oleh Library `libController` kepada _Webots_
+
+### 5.Compound Solid dan Physics Attribute
+1. Buka `collision_avoidance.wbt`dan kemudian Reset Simulasi dan kemudian Save As dengan cara `File / Save World As...`sebagai `compound_solid.wbt`   
+(**Selesai pada 12 November 2019, jam 22.24**)
+2. 
