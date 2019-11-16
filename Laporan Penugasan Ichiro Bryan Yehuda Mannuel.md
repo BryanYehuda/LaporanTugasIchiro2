@@ -440,14 +440,40 @@ rightMotor->setVelocity(rightSpeed);
 Berarti kita menggunakan informasi dari bagian sebelumnya untuk menjalankan kedua roda dari Robot tersebut
 
 11. Dari bagian keempat ini, kita mempelajari :
-   * Controller Entry Point adalah `main function` sama sepoerti Code dalam bahasa C++ pada umumnya
-   * Tidak boleh ada Function `Webots API` yang diapnngil sebelum Function `wp_robots_init`
-   * Function terakhir yang dipanggil sebelum `main function` berakhir adalah Function `wp_robot_cleanup
-   * Sebuah Device direferensikan oleh Field `name` dari _node_ device tersebut. dan bisa diambil menggunakan Function `wp_robot_get_device`
-   * Setiap controller dijalankan sebagai proses anak dari _Webots_, sehingga proses ini tidak berbagi memori dengan _Webots_ dan bisa dijalankan oleh CPU yang berbeda-beda
-   * Code Controller dihubungkan oleh Library `libController` kepada _Webots_
+    * Controller Entry Point adalah `main function` sama sepoerti Code dalam bahasa C++ pada umumnya
+    * Tidak boleh ada Function `Webots API` yang diapnngil sebelum Function `wp_robots_init`
+    * Function terakhir yang dipanggil sebelum `main function` berakhir adalah Function `wp_robot_cleanup
+    * Sebuah Device direferensikan oleh Field `name` dari _node_ device tersebut. dan bisa diambil menggunakan Function `wp_robot_get_device`
+    * Setiap controller dijalankan sebagai proses anak dari _Webots_, sehingga proses ini tidak berbagi memori dengan _Webots_ dan bisa dijalankan oleh CPU yang berbeda-beda
+    * Code Controller dihubungkan oleh Library `libController` kepada _Webots_
 
 ### 5.Compound Solid dan Physics Attribute
 1. Buka `collision_avoidance.wbt`dan kemudian Reset Simulasi dan kemudian Save As dengan cara `File / Save World As...`sebagai `compound_solid.wbt`   
 (**Selesai pada 12 November 2019, jam 22.24**)
-2. 
+2. Kita bisa membuat _Nodes Solid_ yang lebih kompleks lagi dengan cara mengubah bentuk _Shape Nodes_ secara imajinatif. Hal ini mungkin dilakukan karena Properties secara Physical maupun Graphical bisa terdiri dari berbagai macam bentuk _Shape Nodes_. Dan kemudian Nodes-nodes ini disatukan dalam satu grup dengan _Group Nodes_
+3. Buat bentuk Dumbbell dengan menyatukan 2 Shape Sphere dan 1 Shape Cylinder
+(**Selesai pada 12 November 2019, jam 22.35**)     
+4. Massa dari suatu benda tegar diberikan oleh Field `mass` atau Field `density`. kita hanya bisa menggunakan salah satu dari Field ini.
+5. Atur Field `mass` pada Dumbbell menjadi `2kg`
+(**Selesai pada 12 November 2019, jam 22.36**)    
+6. Secara default Pusat Massa atau Center of Mass didefinisikan pada pusat benda namun kita juga bisa mengubahnya
+7. Ubah Pusat Massa Dumbbell menjadi `0.01m`
+(**Selesai pada 12 November 2019, jam 22.37**)     
+8. Field `rotation` digunakan untuk menentukan rotasu dari sebuah objek berpacu pada grafik Euler. Grafik Euler ini didefinisikan oleh 4 titiki, dimana 3 titik pertama berisi unit vector yang menentukan sumbu rotasi dan titik ke 4 menentukan derajat rotasi
+9. Ubah Deraja Rotasi Dumbbell agar paralel dengan lantai
+(**Selesai pada 12 November 2019, jam 22.40**)      
+10. Ketika 2 benda padat bertabrakan, Contacts terjadi di titik tabrakan. _Nodes_ `contactProperties` bisa digunakan untuk menentukan perilaku yang diinginkan pada saat terjadi kontak
+11. Ubah Field `contactMaterial` pada _Node_ `WorldInfo` dan tambahkan _Node_ ` ContactProperties` antara kategori `default` dan `dumbbell`. Lalu ubah Field `couloumbFriction` menjadi `0` agar Dumbbell bergeser dan tidak menggelinding karena tidak ada gaya gesek
+(**Selesai pada 12 November 2019, jam 22.44**)      
+12. Field `basicTimeStep` menentukan seberapa cepat sebuah simulasi terjadi. Semakin besar, semakin cepat simulasinya namun semakin tidak Real simulasinya. Oleh karena itu, dibutuhkan sebuah keseimbangan.
+13. Dari Dari bagian kelima ini, kita mempelajari :
+    * Cara membuat benda padat, termasuk yang terdiri dari gabungan beberapa _Shapes Nodes_
+    * Mengetahui semua Physics Parameter yang dibutuhkan untuk membuat simulasi Robot yang Real
+    * Kita tahu bahwa _node_ `geometry` bisa digerakkan dan dirotasi
+ 
+### 6. Robot Beroda Empat
+
+1. Buka `compound_solid.wbt`dan kemudian Reset Simulasi dan kemudian Save As dengan cara `File / Save World As...`sebagai `4_wheels_robot.wbt`   
+(**Selesai pada 12 November 2019, jam 22.50**)
+2. Hapus _Node_ E-Puck, Bola, dan Dumbbell
+(**Selesai pada 12 November 2019, jam 22.51**)
