@@ -77,45 +77,51 @@ dan tunggu hingga proses instalasi selesai
 (**Selesai pada 12 November 2019, jam 21.06**)     
 8. _Webots_ akan menampilkan List semua direktori yang akan dibuatnya, klik Finish, dan tunggu _World_ dibuatkan
 (**Selesai pada 12 November 2019, jam 21.08**)     
-9.  Double-click pada `RectangleArena`dan Modify beberapa Fields yang ada di dalamnya seperti :
+9. _Nodes_ dari _Webots_ ini disusun secara hierarki dan teratur pada Scene Tree yang ada di sebelah kiri. Scene Tree pada saat ini seharusnya berisi :
+      * WorldInfo : mengandung parameter global dari simulasi
+      * Viewpoint : mendefinisikan viewpoin utama dari parameter camera
+      * TexturedBackground : Mendefinisikan background dari scene
+      * TexturedBackgroundLight : Mendefinisikan cahaya pada scene
+      * Rectangle Arena : mendefinisikan satu-satunya object yang ada pada Scene saat ini
+10. Double-click pada `RectangleArena`dan Modify beberapa Fields yang ada di dalamnya seperti :
     * Ubah `floorTileSize` dari `0.5 0.5` ke `0.25 0.25`
     * Ubah  `wallHeight` dari `0.1` ke `0.05`
  (**Selesai pada 12 November 2019, jam 21.10**)      
  
-10. Double-click pada `RectangleArena` untuk mengclose dan menselect nya lagi, tambahkan _node_ baru dengan mengklik Plus (+) Button pada bagian atas dari _Scene Tree_ dan pilih :
+11. Double-click pada `RectangleArena` untuk mengclose dan menselect nya lagi, tambahkan _node_ baru dengan mengklik Plus (+) Button pada bagian atas dari _Scene Tree_ dan pilih :
 ```
 PROTO nodes (Webots Projects) / objects / factory / containers / WoodenBox (Solid)
 ```
 Sebuah Box besar akan muncul di tengah-tengah scene
 (**Selesai pada 12 November 2019, jam 21.12**)     
          
-11. Modify beberapa Fields yang ada pada Box tersebut 
+12. Modify beberapa Fields yang ada pada Box tersebut 
     * Ubah `size` dari `0.6 0.6 0.6` ke `0.1 0.1 0.1`
-    * Ubah  `translation` dari `0 0.5 0` ke `0 0.3 0`
+    * Ubah  `translation` dari `0 0.05 0` ke `0 0.3 0`
     * Shift-Click box tersebut dan pindah ke tengah-tengah scene
     * Copy-Paste box tersebut hingga berjumlah 3 biji
     * Pindah-pindahkan posisi Box sehingga tidak ada yang berada di tengah-tengah arena
     * Save _World_ ketika sudah dirasa cukup penempatannya
  (**Selesai pada 12 November 2019, jam 21.16**)     
-12.  Lakukan Reset pada _World_ dengan mengklik Reset (Rewind) Button
+13.  Lakukan Reset pada _World_ dengan mengklik Reset (Rewind) Button. Pastikan untuk selalu mereset Simulasi sebelum melakukan save atau berlanjut ke step berikutnya. Hal ini bertujuan agar simulasi kita tidak mengalami Error
 (**Selesai pada 12 November 2019, jam 21.16**)     
-13. Double-click pada `WoodenBox` untuk mengclose dan menselect nya lagi, tambahkan _node_ baru dengan mengklik Plus (+) Button pada bagian atas dari _Scene Tree_ dan pilih :
+14. Double-click pada `WoodenBox` untuk mengclose dan menselect nya lagi, tambahkan _node_ baru dengan mengklik Plus (+) Button pada bagian atas dari _Scene Tree_ dan pilih :
 ```
 PROTO nodes (Webots Projects) / robots / gctronic / e-puck / E-puck (Robot)
 ```
 Sebuah Robot _E-puck_ akan muncul di tengah-tengah scene
 (**Selesai pada 12 November 2019, jam 21.16**)     
 
-14. Pindah-pindah Robot _E-puck_ ini agar posisinya pas dan Save _World_
+15. Pindah-pindah Robot _E-puck_ ini agar posisinya pas dan Save _World_
 (**Selesai pada 12 November 2019, jam 21.18**)     
-15. Apply Force ke Robot dengan `Ctrl  + Alt + left-click + drag`, kita tidak bisa memberi force pada Box karena pada saat ini Box dianggap tidak memiliki masa dan menempel ke lantai. Kita nantinya akan bisa memberi Force apabila kita memberi massa ke Box tersebut      
+16. Apply Force ke Robot dengan `Ctrl  + Alt + left-click + drag`, kita tidak bisa memberi force pada Box karena pada saat ini Box dianggap tidak memiliki masa dan menempel ke lantai. Kita nantinya akan bisa memberi Force apabila kita memberi massa ke Box tersebut      
 (**Selesai pada 12 November 2019, jam 21.20**)    
-16. Pause simulasi dan kembalikan ke posisi awal, buka _node_ `Worldinfo` dan Modify Fields `basicTimeStep` menjadi `16` dan Save _World_     
+17. Pause simulasi dan kembalikan ke posisi awal, buka _node_ `Worldinfo` dan Modify Fields `basicTimeStep` menjadi `16` dan Save _World_     
 (**Selesai pada 12 November 2019, jam 21.22**)    
-17. _Controller_ adalah program yang mengatur perilaku dari sebuah Robot. Controller bisa ditulis dalam bahasa _C, C++, Java, Python, MATLAB, ROS_. Setiap _Controller_ bisa digunakan oleh lebih dari satu Robot, tetapi satu Robot hanya bisa mempunyai satu _Controller_.
-18. Buat C++ Controller baru dengan nama `EPuckGoForward` dengan Buka Tab `Wizard` dan klik `New Robot Controller...`, lalu ikuti petunjuk Wizard       
+18. _Controller_ adalah program yang mengatur perilaku dari sebuah Robot. Controller bisa ditulis dalam bahasa _C, C++, Java, Python, MATLAB, ROS_. Setiap _Controller_ bisa digunakan oleh lebih dari satu Robot, tetapi satu Robot hanya bisa mempunyai satu _Controller_.
+19. Buat C++ Controller baru dengan nama `EPuckGoForward` dengan Buka Tab `Wizard` dan klik `New Robot Controller...`, lalu ikuti petunjuk Wizard       
 (**Selesai pada 12 November 2019, jam 21.24**)    
-19. Copy Code berikut ini pada file tersebut dengan cara Copy-Paste ke Editor _Webots_ yang ada di sebelah kanan :
+20. Copy Code berikut ini pada file tersebut dengan cara Copy-Paste ke Editor _Webots_ yang ada di sebelah kanan :
 ```cpp
 #include <webots/Robot.hpp>
 
@@ -146,9 +152,9 @@ int main(int argc, char **argv) {
 ```
 (**Selesai pada 12 November 2019, jam 21.27**)       
 
-20. Double-click pada `E-puck`dan Modify beberapa Fields `controller` yang ada di dalamnya dengan klik `select...` dan pilih _Controller_ `EPuckGoForward`, lalu klik `File / Save Text File` dan compile `Build / Build`. Lalu klik Reset dan jalankan simulasi. Robot akan berjalan dan berhenti ketika roda sudah berputar 10 radian     
+21. Double-click pada `E-puck`dan Modify Fields `controller` yang ada di dalamnya dengan klik `select...` dan pilih _Controller_ `EPuckGoForward`, lalu klik `File / Save Text File` dan compile `Build / Build`. Lalu klik Reset dan jalankan simulasi. Robot akan berjalan dan berhenti ketika roda sudah berputar 10 radian     
 (**Selesai pada 12 November 2019, jam 21.30**)   
-21. Lakukan editing pada Code agar Robot berjalan terus tanpa henti dengan kecepatan tertentu (memiliki Speed Control) dan bukan hanya harus menempuh seberapa jauh jaraknya dengan Copy-Paste :
+22. Lakukan editing pada Code agar Robot berjalan terus tanpa henti dengan kecepatan tertentu (memiliki Speed Control) dan bukan hanya harus menempuh seberapa jauh jaraknya dengan Copy-Paste :
 ```cpp
 #include <webots/Robot.hpp>
 
@@ -184,7 +190,7 @@ int main(int argc, char **argv) {
 ``` 
 (**Selesai pada 12 November 2019, jam 21.35**)
 
-22. Dari Tutorial Part pertama ini, kita belajar :
+23. Dari Tutorial Part pertama ini, kita belajar :
     * Sebuah _World_ tersusun dari berbagai macam _node_ yang tersusun di dalam Scene Tree
     * _World_ disimpan dalam sebuah file berekstensi `.wbt` dalam sistem _Webots_
     * Project ini juga mengandung Controller yang mengatur perilaku dari robot kita
@@ -192,4 +198,56 @@ int main(int argc, char **argv) {
     * Controller dalam bahasa _C, C++, dan Java_ harus dicompile terlebih dahulu
     * Controller diasosiasikan melalui Field `controller` yang ada pada _node_ robot
 
-  ### 2. Modifikasi Environment
+### 2. Modifikasi Environment
+
+1. Buka `my_first_simulation.wbt`dan kemudian Reset Simulasi dan kemudian Save As dengan cara `File / Save World As...`sebagai `obstacles.wbt`       
+(**Selesai pada 12 November 2019, jam 21.40**)              
+2.  Hapus `RectangleArena` dengan menekan tombol `Delete` dan tambahkan _node_ baru dengan mengklik Plus (+) Button pada bagian atas dari _Scene Tree_ dan pilih :
+```
+PROTO nodes (Webots Projects) / objects / floors / Floor (Solid)
+```
+Sebuah _Floor_ baru akan muncul di tengah-tengah scene
+(**Selesai pada 12 November 2019, jam 21.42**)         
+
+3. Double-click pada `Floor`dan Modify beberapa Fields `size`dari `10m x 10m` menjadi `1m x 1m`
+(**Selesai pada 12 November 2019, jam 21.44**)   
+4. Sebuah _Node Solid_ menggambarkan benda tegar, yaitu sebuah benda yang tidak akan bisa terdeformasi dan jarak antar 2 titik di dalam benda itu tidak akan pernah berubah dalam waktu, kecuali ada Force yang sangat besar sehingga merusak ketegaran tersebut.
+5. Untuk mendefinisikan Benda tegar kita harus membuat _Node Solid_ yang di dalamnya ada beberapa _Sub-Node_ seperti :
+    * `children` : berisi bentuk dari benda tegar tersebut
+    * `boundingObjects` : berisi area kolisi benda tegar tersebut
+    * `physics` : berisi pengaturan apakah benda tegar tersebut termasuk dalam lingkungan yang statis atau dinamis
+6. Di dalam Scene Tree. pilih _node_ `solid` dan klik tombol `Add`, Kemudian pilih `Bases nodes` dan pilih _Solid Node_. 
+(**Selesai pada 12 November 2019, jam 21.44**)   
+7. Di dalam Scene Tree, perbesar _Solid Node_ dan kemudian pilih Field `children`, tambahkan _node shape_ dengan mengklik tombol `Add`, kemudian pilih FIeld `appearance`dan tambahkan _node_ `PBRAppearance`
+(**Selesai pada 12 November 2019, jam 21.46**)
+8. Kemudian tambahkan _Node Sphere_ di dalam Field `geometry` dan Modify beberapa Field di dalamnya seperti:
+    *  Perbesar _node- `PBRAppearance` dan ubah FIeld `metalness` ke `0` dan ubah Field `roughness` ke `1`
+    * Tambahkan _Node Sphere_ ke Field `boundingObject`
+    * Tambahkan _Node Physics_ ke Field  `solid`
+    * Modify Field `translation` agar posisi bola menjadi berada di depan robot
+    * Save simulasi
+    * Kita bisa menggerakkan bola dengan memberi Force `Ctrl + Alt + left-click + drag`
+(**Selesai pada 12 November 2019, jam 21.50**)
+9. Untuk setiap _Node Sphere_ yang mendefinisikan bola, kita atur FIeld `radius` ke `0.05` dan Field `subdivision` ke `2` untuk meningkatkan kualitas Graphical dari bola tersebut
+(**Selesai pada 12 November 2019, jam 21.50**)
+10. Mekanisme _DEF-USE_ digunakan untuk mendefinisikan sebuah _node_ di satu tempat kemudian menggunakan definisi tersebut kembali pada tempat yang lainnya di dalam Scene Tree. Kemudian, hal ini juga mempermudah pengguna untuk mengubah beberapa object sekaligus
+11. Cara kerjanya adalah pertama kita melabel _node_ utama dengan label _DEF, kemudian kita mengcopy _node_ ini dan melabelinya dengan label _USE_. Kita hanya bisa mengedit _node_ berlabel _DEF_ saja karena _node_ berlabel _USE_ akan mewarisi semua sifat-sifatnya
+12. Pilih _Node Sphere_ di dalam Scene Tree dan modifiy beberapa Fields :
+    * Masukkan `BALL_GEOMETRY` di dalam Field Editor dimana kita bisa memasukkan _DEF String_
+    * pilih _node_ `boundingObjects` dan kosongkan dengan klik-kanan dan memilih `Delete`
+    * Kemudian, pilih _node_ `boundingObjects` dan klik button `Add` dan pilih `USE / BALL_GEOMETRY`di dalam dialog box
+(**Selesai pada 12 November 2019, jam 21.55**)      
+13. Buat bola kedua dengan parameter yang sama menggunakan _Shape Node_ menggunakan _DEF-USE_
+(**Selesai pada 12 November 2019, jam 22.00**)      
+14. Sekarang kita akan membuat 4 dinding dengan Physics Dinamic. Apa bedanya Static dengan Dinamic? Apabila di dalam Field `physics` kita tidak memberi nilai, maka physics dari benda tersebut adalah statis dan hanya akan berhenti di udara. Namun apabila Field `physics` kita beri nilai, maka physics dari benda tersebut adalah dinamis, yang berarti apabila kita melepas di udara, benda tersebut akan jatuh
+(**Selesai pada 12 November 2019, jam 22.10**)
+15. Simulasi dari benda tegar sangat mahal dan sulit untuk dilakukan. Oleh karena itu kita perlu mencari sebuah titik keseimbangan antara realisme dan kecepatan simulasi.
+16. Save simulasi      
+(**Selesai pada 12 November 2019, jam 22.12**)
+17. Dari Tutorial Part kedua ini, kita belajar :
+     * Membuat lingkungan sederhana yang didasarkan pada benda tegar
+     * Bisa menambahkan _node_ dari Scene Tree dan memodifikasi _Field_ mereka
+     * Semakin mengenal _node_ `Solid, Physics, Shape, Sphere, Box`
+     * Bisa menggunakan mekanisme _DEF-USE_
+
+### 3. Modifikasi Penampilan
