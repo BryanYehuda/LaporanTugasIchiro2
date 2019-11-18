@@ -682,3 +682,69 @@ Pada terminal Linux
 
 ## Tugas Bonus : Mengontrol Robot di Webots dengan ROS Melodic
 
+1. Membuat package baru dengan nama terserah, namun saya namakan dengan nama webots123 dengan command :
+```
+cd /home
+mkdir -p ~/webots123/src
+cd ~/webots123
+catkin_make
+```
+(**Selesai pada 18 November 2019, jam 19.31**)
+
+2. Melakukan search di direktori usr untuk mencari list packages Webots yang sudah terinstall sebelumnya
+(**Selesai pada 18 November 2019, jam 19.33**)
+3. Ternyata saya menemukan packages Webots berada di direktori /usr/local/webots
+(**Selesai pada 18 November 2019, jam 19.35**)
+4. Melakukan copy pada direktori _webots_ros_ , _srv webots_ros_, dan _msg webots_ros_ yang masing-masing terletak pada direktori :
+```
+/usr/local/webots/projects/languages/ros/webots_ros
+/usr/local/webots/projects/default/controllers/ros/include/srv webots_ros/
+/usr/local/webots/projects/default/controllers/ros/include/msg webots_ros/
+```
+ yang ada di package webots123 yang sudah saya buat sebelumnya, direktori folder src adalah :
+ ```
+ /home/webots123/src
+ ```
+ (**Selesai pada 18 November 2019, jam 19.50**)
+
+5. Melakukan _catkin_make_ untuk membuat package dengan command:
+```
+cd ~/webots123
+catkin_make
+```
+ (**Selesai pada 18 November 2019, jam 19.55**)
+
+6. Membuka file World berekstensi _.wbt_ yang ingin kita kontrol menggunakan _ROS_, pada penugasan ini saya membuka World pioneer3at yang memiliki nama pioneer3at.wbt
+ (**Selesai pada 18 November 2019, jam 19.58**)
+ 7. Jalankan `roscore` dengan command :
+ ``` 
+ source devel/setup.bash
+ roscore
+ ```
+ (**Selesai pada 18 November 2019, jam 20.00**)
+
+7. Jalankan simulasi pioneer3at, dapat terlihat pada console tulisan :
+``` 
+The controller is now connected to the ROS master
+```
+yang menandakan bahwa benar simulasi pioneer3at memang terhubung ke sistem _ROS_
+ (**Selesai pada 18 November 2019, jam 20.05**)
+ 
+8. Buka terminal baru dan jalankan Robot kita dengan command :
+```
+cd ~/webots123
+source devel/setup.bash
+rosrun webots_ros pioneer3at
+```
+dapat terlihat pada simulasi bahwa robot kita benar-benar berjalan dan melakukan tugasnya dalam mapping setelah kita menuliskan command tersebut dalam sistem ROS
+ (**Selesai pada 18 November 2019, jam 20.11**)
+
+9. Untuk mengetahui lebih jauh, saya menginstall _ROS_ package _gmapping_ untuk mengetahui proses apa saja yang dikirimkan oleh Robot kita pada simulasi tersebut dengan command pada terminal baru :
+```
+sudo apt-get install ros-melodic-gmapping
+rosrun gmapping slam _gmapping scan:=/pioneer3at/lms291/laser_scan/layer0 _xmax:=30 _xmin:=-30 _ymax:=-30 _delta:=0.2
+```
+ (**Selesai pada 18 November 2019, jam 20.20**)
+
+10. Bisa terlihat pada terminal, proses atau message apa saja yang dikirimkan oleh Robot kita pada saat menjalankan simulasi. Hal ini memastikan bahwa benar Robot kita terkoneksi dengan baik pada sistem _ROS_
+ (**Selesai pada 18 November 2019, jam 20.23**)
