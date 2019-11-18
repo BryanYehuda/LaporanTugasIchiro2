@@ -3,3 +3,4 @@ Laporan dari penugasan Ichiro kedua
 
 Laporan lengkap ada di Laporan Penugasan Ichiro Bryan Yehuda Mannuel.md  
 Semua isi dari direktori _my_first_simulation_ sudah di ekstrak dalam bentuk .Rar
+Semua isi dari package ROS _webots123_ sudah di ekstrak dalam bentuk .Rar
