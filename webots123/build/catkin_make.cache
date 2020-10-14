@@ -1,0 +1,2 @@
+webots_ros
+-DCATKIN_DEVEL_PREFIX=/home/bryan/webots123/devel -DCMAKE_INSTALL_PREFIX=/home/bryan/webots123/install -G Unix Makefiles

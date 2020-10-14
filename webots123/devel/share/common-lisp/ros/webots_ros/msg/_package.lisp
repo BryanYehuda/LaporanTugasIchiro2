@@ -1,0 +1,19 @@
+(cl:defpackage webots_ros-msg
+  (:use )
+  (:export
+   "<BOOLSTAMPED>"
+   "BOOLSTAMPED"
+   "<FLOAT64STAMPED>"
+   "FLOAT64STAMPED"
+   "<INT32STAMPED>"
+   "INT32STAMPED"
+   "<INT8STAMPED>"
+   "INT8STAMPED"
+   "<RADARTARGET>"
+   "RADARTARGET"
+   "<RECOGNITIONOBJECT>"
+   "RECOGNITIONOBJECT"
+   "<STRINGSTAMPED>"
+   "STRINGSTAMPED"
+  ))
+
