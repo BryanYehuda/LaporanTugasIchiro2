@@ -1,5 +1,5 @@
 # Laporan Tugas Ichiro 2
-**Laporan dari penugasan Ichiro kedua**
+**Laporan penugasan Ichiro kedua**
 
 ### Penugasan kedua ini kita harus melakukan instalasi terhadap Webots dan mengerjakan tutorial Webots
 -Laporan lengkap ada di Laporan Penugasan Ichiro Bryan Yehuda Mannuel.md  
